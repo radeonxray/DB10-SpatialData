@@ -38,6 +38,45 @@ Again, to help navigate the danish table names:
 
 -----
 
+## Setup
+
+### Docker Container
+
+Create a new Docker container
+
+`sudo docker run --rm --name my_mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass1234 -d mysql`
+
+Enter the docker container
+
+`sudo docker exec -it my_mysql bash`
+
+Update the Docker Container
+
+`apt-get update`
+
+Install wget to download the `.sql`-files
+
+`apt-get install wget -y`
+
+### Import Database
+
+Download the entire .sql-file here
+
+Open MysqlWorkbench, connect to the docker container, the import the provided .sql by:
+
+`Server -> Data Import`
+
+- Select `Import from Self-contained file` 
+- Locate the downloaded .sql-file
+- Create a new schema for the DB to be imported into (I've named it db10)
+- Go to `Import Progress` 
+- Press the `Start Import`-button to begin the process
+
+The process might take a couple of minutes, but if you've done everything correctly, you should now have a schema with the imported database, tables, data and all.
+
+
+-----
+
 ## Answer Ex 1
 
 ------

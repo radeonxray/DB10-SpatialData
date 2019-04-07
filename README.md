@@ -98,7 +98,7 @@ order by percent_park_area desc;
 ```
 **Results**
 
-![img]()
+![img](./ex1-1.png)
 
 **How many trees are located in exposed areas?**
 
@@ -115,7 +115,7 @@ order by no_of_trees_per_m2 desc;
 
 **Results**
 
-![img]()
+![img](./ex1-2.png)
 ------
 
 ## Answer Ex 2
@@ -133,6 +133,6 @@ where st_within(cykelstativ.wkb_geometry, heavy_roads.area);
 
 **Results**
 
-![img]()
+![img](./ex2-1.png)
 
 ------

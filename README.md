@@ -1,4 +1,4 @@
-# DB9-SpatialData
+# DB10-Spatial Data
 Database Assignment 10 regarding SpatialData and Geo
 
 Assignment: https://github.com/datsoftlyngby/soft2019spring-databases/blob/master/assignments/assignment10.md

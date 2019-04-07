@@ -60,7 +60,8 @@ Install wget to download the `.sql`-files
 
 ### Import Database
 
-Download the entire .sql-file here
+Download the entire .sql-file [here](https://raw.githubusercontent.com/radeonxray/DB10-SpatialData/master/Dump20190407.sql)
+
 
 Open MysqlWorkbench, connect to the docker container, the import the provided .sql by:
 
@@ -79,8 +80,59 @@ The process might take a couple of minutes, but if you've done everything correc
 
 ## Answer Ex 1
 
+**How many parks are located in exposed areas?**
+
+```mysql
+with parkregister_extended as (select *, ST_Area(wkb_geometry) as realm2 from parkregister)
+
+select byomraade,
+       delomraade,
+       count(parkregister_extended.areal_id)  as "no_of_parks",
+       sum(parkregister_extended.realm2)      as "overall_park_area",
+       sum(parkregister_extended.realm2) / m2 as "percent_park_area"
+from udsatte_byomraader,
+     parkregister_extended
+where ST_Within(parkregister_extended.wkb_geometry, udsatte_byomraader.wkb_geometry)
+group by udsatte_byomraader.id
+order by percent_park_area desc;
+```
+**Results**
+
+![img]()
+
+**How many trees are located in exposed areas?**
+
+```mysql
+select byomraade,
+       delomraade,
+       count(gadetraer.id)  as "no_of_trees",
+       count(gadetraer.id) / (m2 / 1000000) as "no_of_trees_per_m2"
+from udsatte_byomraader, gadetraer
+where st_within(gadetraer.wkb_geometry, udsatte_byomraader.wkb_geometry)
+group by udsatte_byomraader.id
+order by no_of_trees_per_m2 desc;
+```
+
+**Results**
+
+![img]()
 ------
 
 ## Answer Ex 2
+
+**How many bike racks are places along routes for heavy traffic?**
+
+```mysql
+with heavy_roads as (select ST_GeomFromText(ST_ASTEXT(ST_Buffer(ST_GeomFromText(ST_AsText(wkb_geometry), 0), 0.00025)), 4326) as area, id, vej from tungvognsnet)
+select
+       count(*) as "no_racks",
+       sum(cykelstativ.antal_pladser) as "no_spaces"
+from heavy_roads, cykelstativ
+where st_within(cykelstativ.wkb_geometry, heavy_roads.area);
+```
+
+**Results**
+
+![img]()
 
 ------

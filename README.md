@@ -85,9 +85,8 @@ The process might take a couple of minutes, but if you've done everything correc
 ```mysql
 with parkregister_extended as (select *, ST_Area(wkb_geometry) as realm2 from parkregister)
 
-select byomraade,
-       delomraade,
-       count(parkregister_extended.areal_id)  as "no_of_parks",
+select byomraade, delomraade,
+       count(parkregister_extended.areal_id)  as "number_of_parks",
        sum(parkregister_extended.realm2)      as "overall_park_area",
        sum(parkregister_extended.realm2) / m2 as "percent_park_area"
 from udsatte_byomraader,
